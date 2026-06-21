@@ -1,17 +1,23 @@
 import time
 import json
 import os
+import socket
 from mcstatus import JavaServer
 
-SERVER_ADDRESS = "play.schnitzelsmp.eu:25565"
+# Wir nutzen das v4-zu-v6-Gateway direkt als feste IP, um GitHubs DNS-Hänger komplett zu umgehen
+# play.schnitzelsmp.eu über das v4-only.v6.rocks Gateway
+TARGET_IP = "109.230.228.163" 
+TARGET_PORT = 25565
 OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "serverstatus.json")
 
 def update_status():
+    # Setzt ein globales Timeout für alle Netzwerkverbindungen in diesem Skript
+    socket.setdefaulttimeout(3.0)
+    
     try:
-        # Ersetzt lookup durch die direkte Verbindung, um DNS-Hänger in der Cloud zu vermeiden
-        server = JavaServer.lookup(SERVER_ADDRESS, timeout=5)
+        # Direkte Verbindung ohne DNS-Lookup
+        server = JavaServer(TARGET_IP, TARGET_PORT)
         status = server.status()
-
         
         data = {
             "online": True,
@@ -29,13 +35,11 @@ def update_status():
                 "max": 0
             }
         }
-        print("Status aktualisiert: Server ist Offline.")
+        print(f"Status aktualisiert (Fehler sicher abgefangen): Server offline. Details: {e}")
         
     with open(OUTPUT_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
 if __name__ == "__main__":
-    print("Minecraft Status-Worker aktiv. Drücke Strg+C zum Beenden...")
-    while True:
-        update_status()
-        time.sleep(30)
+    print("Minecraft Status-Worker startet harte Abfrage für GitHub Actions...")
+    update_status()
