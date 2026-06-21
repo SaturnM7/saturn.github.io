@@ -33,8 +33,14 @@ def update_status():
         json.dump(data, f, indent=4)
 
 if __name__ == "__main__":
-    print("Minecraft Status-Worker aktiv. Drücke Strg+C zum Beenden...")
-    # Runs 5 times and then exits automatically
-    for _ in range(5):
+    print("Minecraft Status-Worker aktiv. Der Prozess endet nach 3 Abfragen...")
+    
+    # We use a range to limit the number of loops
+    for i in range(3):
         update_status()
-        time.sleep(30)
+        
+        # Only sleep if we have more fetches left to do
+        if i < 2: 
+            time.sleep(30)
+            
+    print("Abfragen abgeschlossen. Programm wird beendet.")
