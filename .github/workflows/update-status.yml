@@ -2,45 +2,46 @@ name: Update Minecraft Server Status
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-  workflow_dispatch:
+    - cron: '*/5 * * * *' # Every 5 minutes
+  workflow_dispatch:      # Allows you to run it manually
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write     # Required to push changes back to the repo
     steps:
-    - name: Code auschecken
+    - name: Checkout code
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0 # Holt die gesamte Git-Historie, um Pull-Konflikte zu vermeiden
+        fetch-depth: 0
 
-    - name: Python einrichten
+    - name: Setup Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.x'
 
-    - name: Abhängigkeiten installieren
+    - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install mcstatus
 
-    - name: Status-Skript ausführen
-      run: python status_worker.py
+    - name: Run Status Script
+      run: python update_worker.py
 
-    - name: Datei in GitHub committen und pushen
+    - name: Commit and push changes
       run: |
         git config --global user.name "GitHub Action Bot"
         git config --global user.email "actions@github.com"
         
-        # Erst den neuesten Stand vom Server holen und lokale Änderungen oben draufsetzen
+        # Pull latest changes to avoid conflicts
         git pull origin main --rebase
         
         git add serverstatus.json
         
-        # Nur committen und pushen, wenn sich die serverstatus.json wirklich geändert hat
+        # Only commit if the file actually changed
         if ! git diff --cached --quiet; then
           git commit -m "Update serverstatus.json [skip ci]"
           git push origin main
         else
-          echo "Keine Änderungen am Serverstatus festgestellt."
+          echo "No changes in status."
         fi
