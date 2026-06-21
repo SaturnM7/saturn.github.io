@@ -118,27 +118,6 @@ header {
     font-size: 1.1rem;
 }
 
-/* Status Styling */
-.status-container {
-    background: var(--surface0);
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-.status-line {
-    font-size: 0.9rem;
-    margin-bottom: 4px;
-}
-
-.status-checking { color: var(--yellow); }
-.status-online { color: var(--green); font-weight: bold; }
-.status-offline { color: var(--red); font-weight: bold; }
-
-.player-count {
-    font-size: 0.85rem;
-    color: var(--subtext);
-}
 
 /* Links */
 .links {
