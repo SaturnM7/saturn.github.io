@@ -1,7 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const expandBtn = document.getElementById('expandBtn');
-    const expandContent = document.getElementById('expandContent');
+    // Setup for the first button
+    setupExpandable('expandBtn', 'expandContent', 'server-status', 'player-count-wrapper', 'player-count', 'max-players');
+    
+    // Setup for the second button
+    setupExpandable('expandBtn2', 'expandContent2', 'server-status2', 'player-count-wrapper2', 'player-count2', 'max-players2');
+});
+
+function setupExpandable(btnId, contentId, statusId, wrapperId, currentId, maxId) {
+    const expandBtn = document.getElementById(btnId);
+    const expandContent = document.getElementById(contentId);
     const icon = expandBtn.querySelector('.icon');
+
+    const updateUI = () => loadLocalServerStatus(statusId, wrapperId, currentId, maxId, expandContent);
 
     expandBtn.addEventListener('click', () => {
         const isExpanded = expandContent.style.maxHeight && expandContent.style.maxHeight !== '0px';
@@ -12,28 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             expandContent.style.maxHeight = expandContent.scrollHeight + 'px';
             icon.innerText = '-';
-            
-            // Holt die Daten direkt aus deiner lokalen JSON-Datei
-            loadLocalServerStatus();
+            updateUI();
         }
     });
 
     setInterval(() => {
         const isExpanded = expandContent.style.maxHeight && expandContent.style.maxHeight !== '0px';
         if (isExpanded) {
-            loadLocalServerStatus();
+            updateUI();
         }
     }, 30000);
-});
+}
 
-function loadLocalServerStatus() {
-    const statusElement = document.getElementById('server-status');
-    const playerWrapper = document.getElementById('player-count-wrapper');
-    const playerCount = document.getElementById('player-count');
-    const maxPlayers = document.getElementById('max-players');
-    const expandContent = document.getElementById('expandContent');
+function loadLocalServerStatus(statusId, wrapperId, currentId, maxId, expandContent) {
+    const statusElement = document.getElementById(statusId);
+    const playerWrapper = document.getElementById(wrapperId);
+    const playerCount = document.getElementById(currentId);
+    const maxPlayers = document.getElementById(maxId);
 
-    // Korrigierter fetch-Befehl ohne Syntaxfehler
     fetch('serverstatus.json?t=' + Date.now())
         .then(response => {
             if (!response.ok) throw new Error('Datei nicht gefunden');
@@ -42,7 +48,7 @@ function loadLocalServerStatus() {
         .then(data => {
             if (data && data.online === true) {
                 statusElement.innerText = "Online";
-                statusElement.style.color = "#2ecc71"; // Minecraft-Grün
+                statusElement.style.color = "#2ecc71"; 
                 
                 playerCount.innerText = data.players.online;
                 maxPlayers.innerText = data.players.max;
@@ -61,7 +67,7 @@ function loadLocalServerStatus() {
 
 function setServerOffline(statusElement, playerWrapper) {
     statusElement.innerText = "Offline";
-    statusElement.style.color = "#e74c3c"; // Rot
+    statusElement.style.color = "#e74c3c"; 
     playerWrapper.style.display = "none";
 }
 
