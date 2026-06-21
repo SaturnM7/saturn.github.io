@@ -8,8 +8,9 @@ OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "serverstatus.json")
 
 def update_status():
     try:
+        # Added a 10s timeout so it doesn't hang if the server is laggy
         server = JavaServer.lookup(SERVER_ADDRESS)
-        status = server.status()
+        status = server.status(timeout=10)
         
         data = {
             "online": True,
@@ -18,7 +19,7 @@ def update_status():
                 "max": status.players.max
             }
         }
-        print(f"Status aktualisiert: Online ({status.players.online}/{status.players.max})")
+        print(f"Status aktualisiert: Online ({status.players.online}/{status.players.max})", flush=True)
     except Exception as e:
         data = {
             "online": False,
@@ -27,20 +28,19 @@ def update_status():
                 "max": 0
             }
         }
-        print("Status aktualisiert: Server ist Offline.")
+        print(f"Status aktualisiert: Server ist Offline. ({e})", flush=True)
         
     with open(OUTPUT_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
 if __name__ == "__main__":
-    print("Minecraft Status-Worker aktiv. Der Prozess endet nach 3 Abfragen...")
-    
-    # We use a range to limit the number of loops
+    # We will fetch 3 times then STOP so the YAML can commit the changes
     for i in range(3):
         update_status()
         
-        # Only sleep if we have more fetches left to do
-        if i < 2: 
+        # Wait 30 seconds before the next fetch, but NOT after the last one
+        if i < 2:
             time.sleep(30)
-            
-    print("Abfragen abgeschlossen. Programm wird beendet.")
+
+    # Script ends here, GitHub Action will now move to "Commit and push changes"
+    print("Worker beendet. Starte GitHub Commit...", flush=True)
