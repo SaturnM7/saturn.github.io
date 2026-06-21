@@ -1,39 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Select all buttons with the class 'expand-btn'
-    const expandButtons = document.querySelectorAll('.expand-btn');
+    // Select ALL buttons with the class 'expand-btn'
+    const buttons = document.querySelectorAll('.expand-btn');
 
-    expandButtons.forEach(btn => {
+    buttons.forEach(btn => {
         btn.addEventListener('click', () => {
-            const expandContent = btn.nextElementSibling; // The div right after the button
+            const content = btn.nextElementSibling; // The content div below the button
             const icon = btn.querySelector('.icon');
 
-            // Check if it's currently open
-            const isOpen = expandContent.style.maxHeight && expandContent.style.maxHeight !== '0px';
-
-            if (isOpen) {
-                expandContent.style.maxHeight = '0px';
+            // Toggle Open/Closed
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
                 icon.innerText = '+';
             } else {
-                // If this is the Minecraft button, load the status
-                // We check the text inside the button to identify it
-                if (btn.innerText.includes("Minecraft Server")) {
+                // If it's the Minecraft button, refresh status
+                if (btn.innerText.includes("Minecraft")) {
                     loadLocalServerStatus();
                 }
-
-                // Smoothly expand (adjust 500px if your text is very long)
-                expandContent.style.maxHeight = '500px'; 
+                
+                content.style.maxHeight = '500px'; // Set to a height large enough for your text
                 icon.innerText = '-';
             }
         });
     });
-
-    // Refresh Minecraft status every 30 seconds only if it's visible
-    setInterval(() => {
-        const mcContent = document.querySelector('.expand-content'); // Assuming Minecraft is the first one
-        if (mcContent && mcContent.style.maxHeight && mcContent.style.maxHeight !== '0px') {
-            loadLocalServerStatus();
-        }
-    }, 30000);
 });
 
 function loadLocalServerStatus() {
@@ -42,7 +30,6 @@ function loadLocalServerStatus() {
     const playerCount = document.getElementById('player-count');
     const maxPlayers = document.getElementById('max-players');
 
-    // Added a check to make sure the elements exist before updating
     if (!statusEl) return;
 
     fetch('serverstatus.json?t=' + Date.now())
