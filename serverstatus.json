@@ -1,7 +1,7 @@
 {
-    "online": true,
+    "online": false,
     "players": {
-        "online": 1,
-        "max": 20
+        "online": 0,
+        "max": 0
     }
 }
