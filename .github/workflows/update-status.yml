@@ -23,7 +23,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install mcstatus
+        pip install mcstatus requests
 
     - name: Run Status Script
       run: python update_worker.py
@@ -33,18 +33,12 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         
-        # 1. Stage the file immediately so it's not "unstaged"
         git add serverstatus.json
         
-        # 2. Check if there are actually changes to commit
         if ! git diff --cached --quiet; then
           git commit -m "Update serverstatus.json [skip ci]"
-          
-          # 3. Pull with rebase now that our local change is committed
           git pull origin main --rebase
-          
-          # 4. Push the combined result
           git push origin main
         else
-          echo "No changes in status detected."
+          echo "No status changes to commit."
         fi
