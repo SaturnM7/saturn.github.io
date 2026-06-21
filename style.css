@@ -1,78 +1,89 @@
 /* Catppuccin Mocha Palette */
 :root {
     --base: #1e1e2e;
+    --mantle: #181825;
     --surface0: #313244;
     --surface1: #45475a;
     --text: #cdd6f4;
     --subtext: #a6adc8;
-    --yellow: #f9e2af;
+    --lavender: #b4befe;
+    --mauve: #cba6f7;
+    --sapphire: #74c7ec;
     --green: #a6e3a1;
     --red: #f38ba8;
-    --blue: #89b4fa;
+    --yellow: #f9e2af;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     background-color: var(--base);
     color: var(--text);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     display: flex;
     justify-content: center;
-    padding: 50px 20px;
-    margin: 0;
+    align-items: center;
+    min-height: 100vh;
+    line-height: 1.6;
+    padding: 20px;
 }
 
 .container {
-    max-width: 500px;
     width: 100%;
+    max-width: 550px;
+    text-align: center;
 }
 
 header {
-    text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 2.5rem;
 }
 
 .glow {
-    color: var(--yellow);
-    text-shadow: 0 0 15px rgba(249, 226, 175, 0.5);
-    font-size: 3rem;
-    margin: 0;
+    color: var(--mauve);
+    font-size: 3.5rem;
+    text-shadow: 0 0 15px rgba(203, 166, 247, 0.4);
+    margin-bottom: 0.5rem;
 }
 
 .subtitle {
     color: var(--subtext);
-    font-size: 0.9rem;
-    margin-top: 5px;
+    font-size: 1rem;
+    letter-spacing: 1px;
 }
 
 .about {
-    text-align: center;
-    margin-bottom: 30px;
-    color: var(--subtext);
-    font-style: italic;
+    margin-bottom: 2rem;
+    color: var(--text);
 }
 
-/* Shapes & Containers */
+/* Expandable Tab */
 .expandable-container {
     background-color: var(--surface0);
     border-radius: 12px;
-    margin-bottom: 12px;
     overflow: hidden;
+    margin-bottom: 2rem;
     border: 1px solid var(--surface1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .expand-btn {
     width: 100%;
-    padding: 16px 20px;
+    padding: 1.2rem;
     background: none;
     border: none;
-    color: var(--text);
+    color: var(--lavender);
+    font-family: inherit;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: background 0.2s;
+    transition: background 0.3s;
 }
 
 .expand-btn:hover {
@@ -82,73 +93,85 @@ header {
 .expand-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+    transition: max-height 0.4s ease-out;
+    background-color: var(--mantle);
 }
 
 .content-inner {
-    padding: 0 20px 20px 20px;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: var(--subtext);
+    padding: 1.5rem;
+    text-align: left;
+    border-top: 1px solid var(--surface1);
 }
 
-.accent-text {
-    color: var(--yellow);
-}
-
-/* Minecraft Specifics */
 .ip-box {
     background-color: var(--base);
-    padding: 12px;
+    padding: 0.8rem;
     border-radius: 8px;
-    margin: 15px 0;
+    margin: 1.2rem 0;
     text-align: center;
-    border: 1px dashed var(--blue);
+    border: 1px dashed var(--sapphire);
 }
 
 .ip-box code {
-    color: var(--blue);
-    font-family: monospace;
-    font-size: 1rem;
+    color: var(--green);
+    font-size: 1.1rem;
 }
 
-#server-status {
-    color: var(--yellow); /* Default checking color */
-    font-weight: bold;
+/* Status Styling */
+.status-container {
+    background: var(--surface0);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
 }
 
-.small {
-    font-size: 0.75rem;
-    opacity: 0.7;
+.status-line {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.status-checking { color: var(--yellow); }
+.status-online { color: var(--green); font-weight: bold; }
+.status-offline { color: var(--red); font-weight: bold; }
+
+.player-count {
+    font-size: 0.85rem;
+    color: var(--subtext);
 }
 
 /* Links */
 .links {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 25px;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .link-card {
-    background-color: var(--surface0);
-    padding: 12px;
-    border-radius: 8px;
     text-decoration: none;
-    color: var(--text);
-    text-align: center;
-    border: 1px solid var(--surface1);
-    transition: 0.2s;
+    color: var(--base);
+    background-color: var(--lavender);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
 }
 
 .link-card:hover {
-    border-color: var(--yellow);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    background-color: var(--mauve);
+    box-shadow: 0 5px 15px rgba(203, 166, 247, 0.3);
 }
 
 footer {
-    text-align: center;
-    margin-top: 40px;
-    color: var(--surface1);
+    margin-top: 3rem;
     font-size: 0.8rem;
+    color: var(--surface1);
+}
+
+.small {
+    font-size: 0.75rem;
+    color: var(--surface1);
+    margin-top: 10px;
 }
