@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saturn | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://googleapis.com" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1 class="glow">Saturn</h1>
+            <p class="subtitle">Creative Developer & Server Owner</p>
+        </header>
+
+        <main>
+            <section class="about">
+                <p>Hello! I'm Saturn. I build digital experiences and manage community spaces.</p>
+            </section>
+
+            <div class="expandable-container">
+                <button class="expand-btn" id="expandBtn">
+                    <span>Minecraft Server</span>
+                    <span class="icon">+</span>
+                </button>
+                <div class="expand-content" id="expandContent">
+                    <div class="content-inner">
+                        <p>Join <strong>SchnitzelSMP</strong>, my self-hosted community survival server.</p>
+                        
+                        <div class="ip-box">
+                            <code>play.schnitzelsmp.eu</code>
+                        </div>
+
+                        <div class="status-container">
+                            <div class="status-line">
+                                Status: <span id="server-status" style="color: #f1c40f;">Checking...</span>
+                            </div>
+                            <div id="player-count-wrapper" class="player-count" style="display: none; margin-top: 5px;">
+                                Players: <span id="player-count">0</span> / <span id="max-players">0</span>
+                            </div>
+                        </div>
+
+                        <p class="small">Note: If you have trouble connecting, ensure your client supports IPv6 or use our proxy address.</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="links">
+                <a href="#" class="link-card">GitHub</a>
+                <a href="#" class="link-card">Discord</a>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Saturn</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
