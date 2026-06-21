@@ -1,7 +1,1 @@
-{
-    "online": false,
-    "players": {
-        "online": 0,
-        "max": 0
-    }
-}
+{"online": false, "players": {"online": 0, "max": 0}}
