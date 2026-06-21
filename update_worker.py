@@ -4,11 +4,12 @@ import os
 from mcstatus import JavaServer
 
 SERVER_ADDRESS = "play.schnitzelsmp.eu:25565"
-OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "serverstatus.json")
+# Get the absolute path to the directory where the script is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_FILE = os.path.join(BASE_DIR, "serverstatus.json")
 
 def update_status():
     try:
-        # Added a 10s timeout so it doesn't hang if the server is laggy
         server = JavaServer.lookup(SERVER_ADDRESS)
         status = server.status(timeout=10)
         
@@ -17,30 +18,26 @@ def update_status():
             "players": {
                 "online": status.players.online,
                 "max": status.players.max
-            }
+            },
+            # This timestamp forces Git to see a change even if player count is the same
+            "last_updated": time.strftime("%Y-%m-%d %H:%M:%S")
         }
-        print(f"Status aktualisiert: Online ({status.players.online}/{status.players.max})", flush=True)
+        print(f"Status: Online ({status.players.online}/{status.players.max}) - {data['last_updated']}", flush=True)
     except Exception as e:
         data = {
             "online": False,
-            "players": {
-                "online": 0,
-                "max": 0
-            }
+            "players": {"online": 0, "max": 0},
+            "last_updated": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "error": str(e)
         }
-        print(f"Status aktualisiert: Server ist Offline. ({e})", flush=True)
+        print(f"Status: Offline. Error: {e}", flush=True)
         
     with open(OUTPUT_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
 if __name__ == "__main__":
-    # We will fetch 3 times then STOP so the YAML can commit the changes
-    for i in range(3):
-        update_status()
-        
-        # Wait 30 seconds before the next fetch, but NOT after the last one
-        if i < 2:
-            time.sleep(30)
-
-    # Script ends here, GitHub Action will now move to "Commit and push changes"
-    print("Worker beendet. Starte GitHub Commit...", flush=True)
+    # We only run ONCE for GitHub Actions. 
+    # Since your YAML runs every 5 minutes, there is no need to loop inside the script.
+    # This ensures the script finishes immediately and the YAML can push the changes.
+    update_status()
+    print("Update complete. Exiting script to allow GitHub Push.")
