@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Select all buttons
     const buttons = document.querySelectorAll('.expand-btn');
 
     buttons.forEach(btn => {
@@ -7,13 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const content = btn.nextElementSibling;
             const icon = btn.querySelector('.icon');
             
+            // Check if open
             const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
 
             if (isOpen) {
                 content.style.maxHeight = '0px';
                 icon.innerText = '+';
             } else {
-                // Only load status if it's the Minecraft button
+                // If it's the MC button, load status
                 if (btn.innerText.includes("Minecraft")) {
                     loadLocalServerStatus();
                 }
@@ -23,10 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Refresh status every 30 seconds
+    // Auto-refresh every 30s if open
     setInterval(() => {
-        const mcButton = document.querySelector('.expand-btn'); // First button
-        const mcContent = mcButton.nextElementSibling;
+        const mcContent = document.querySelector('.expand-content');
         if (mcContent.style.maxHeight && mcContent.style.maxHeight !== '0px') {
             loadLocalServerStatus();
         }
@@ -46,18 +45,18 @@ function loadLocalServerStatus() {
         .then(data => {
             if (data.online) {
                 statusEl.innerText = "Online";
-                statusEl.style.color = "#2ecc71"; // Your Green
+                statusEl.style.color = "#a6e3a1"; // Catppuccin Green
                 playerCount.innerText = data.players.online;
                 maxPlayers.innerText = data.players.max;
                 playerWrapper.style.display = "block";
             } else {
                 statusEl.innerText = "Offline";
-                statusEl.style.color = "#e74c3c"; // Your Red
+                statusEl.style.color = "#f38ba8"; // Catppuccin Red
                 playerWrapper.style.display = "none";
             }
         })
         .catch(() => {
             statusEl.innerText = "Offline";
-            statusEl.style.color = "#e74c3c";
+            statusEl.style.color = "#f38ba8";
         });
 }
