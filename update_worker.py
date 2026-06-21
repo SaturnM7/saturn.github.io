@@ -4,40 +4,59 @@ import os
 from mcstatus import JavaServer
 
 SERVER_ADDRESS = "play.schnitzelsmp.eu:25565"
-# Get the absolute path to the directory where the script is located
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(BASE_DIR, "serverstatus.json")
 
-def update_status():
+def get_server_data():
+    """Attempts to fetch server data. Returns dict on success, None on failure."""
     try:
+        # mcstatus handles SRV records automatically
         server = JavaServer.lookup(SERVER_ADDRESS)
-        status = server.status(timeout=10)
+        # .status() in this version does not take 'timeout' as a keyword argument
+        status = server.status()
         
-        data = {
+        return {
             "online": True,
             "players": {
                 "online": status.players.online,
                 "max": status.players.max
             },
-            # This timestamp forces Git to see a change even if player count is the same
             "last_updated": time.strftime("%Y-%m-%d %H:%M:%S")
         }
-        print(f"Status: Online ({status.players.online}/{status.players.max}) - {data['last_updated']}", flush=True)
     except Exception as e:
-        data = {
+        print(f"Abfrage fehlgeschlagen: {e}", flush=True)
+        return None
+
+if __name__ == "__main__":
+    print(f"Starte Status-Check für {SERVER_ADDRESS}...", flush=True)
+    
+    final_data = None
+    
+    # We try up to 3 times to get an "Online" status
+    # This prevents temporary network blips from showing the server as offline
+    for i in range(3):
+        result = get_server_data()
+        if result:
+            final_data = result
+            print(f"Erfolg! Spieler: {result['players']['online']}/{result['players']['max']}", flush=True)
+            break
+        
+        if i < 2:
+            print("Server nicht erreichbar. Erneuter Versuch in 10 Sekunden...", flush=True)
+            time.sleep(10)
+
+    # If all 3 tries failed, set data to offline
+    if not final_data:
+        final_data = {
             "online": False,
             "players": {"online": 0, "max": 0},
             "last_updated": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "error": str(e)
+            "status": "offline"
         }
-        print(f"Status: Offline. Error: {e}", flush=True)
-        
-    with open(OUTPUT_FILE, "w") as f:
-        json.dump(data, f, indent=4)
+        print("Server konnte nach 3 Versuchen nicht erreicht werden.", flush=True)
 
-if __name__ == "__main__":
-    # We only run ONCE for GitHub Actions. 
-    # Since your YAML runs every 5 minutes, there is no need to loop inside the script.
-    # This ensures the script finishes immediately and the YAML can push the changes.
-    update_status()
-    print("Update complete. Exiting script to allow GitHub Push.")
+    # Write the result to the file
+    with open(OUTPUT_FILE, "w") as f:
+        json.dump(final_data, f, indent=4)
+        
+    print("Script beendet. GitHub Action übernimmt nun den Push.", flush=True)
