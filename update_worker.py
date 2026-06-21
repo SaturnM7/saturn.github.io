@@ -34,6 +34,7 @@ def update_status():
 
 if __name__ == "__main__":
     print("Minecraft Status-Worker aktiv. Drücke Strg+C zum Beenden...")
-    while True:
+    # Runs 5 times and then exits automatically
+    for _ in range(5):
         update_status()
         time.sleep(30)
