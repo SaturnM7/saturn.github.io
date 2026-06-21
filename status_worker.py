@@ -8,8 +8,10 @@ OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "serverstatus.json")
 
 def update_status():
     try:
-        server = JavaServer.lookup(SERVER_ADDRESS)
+        # Ersetzt lookup durch die direkte Verbindung, um DNS-Hänger in der Cloud zu vermeiden
+        server = JavaServer.lookup(SERVER_ADDRESS, timeout=5)
         status = server.status()
+
         
         data = {
             "online": True,
