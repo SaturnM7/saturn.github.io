@@ -1,27 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Select ALL buttons with the class 'expand-btn'
+    // Select all buttons
     const buttons = document.querySelectorAll('.expand-btn');
 
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
-            const content = btn.nextElementSibling; // The content div below the button
+            const content = btn.nextElementSibling;
             const icon = btn.querySelector('.icon');
+            
+            const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
 
-            // Toggle Open/Closed
-            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+            if (isOpen) {
                 content.style.maxHeight = '0px';
                 icon.innerText = '+';
             } else {
-                // If it's the Minecraft button, refresh status
+                // Only load status if it's the Minecraft button
                 if (btn.innerText.includes("Minecraft")) {
                     loadLocalServerStatus();
                 }
-                
-                content.style.maxHeight = '500px'; // Set to a height large enough for your text
+                content.style.maxHeight = '500px'; 
                 icon.innerText = '-';
             }
         });
     });
+
+    // Refresh status every 30 seconds
+    setInterval(() => {
+        const mcButton = document.querySelector('.expand-btn'); // First button
+        const mcContent = mcButton.nextElementSibling;
+        if (mcContent.style.maxHeight && mcContent.style.maxHeight !== '0px') {
+            loadLocalServerStatus();
+        }
+    }, 30000);
 });
 
 function loadLocalServerStatus() {
@@ -37,13 +46,13 @@ function loadLocalServerStatus() {
         .then(data => {
             if (data.online) {
                 statusEl.innerText = "Online";
-                statusEl.style.color = "#2ecc71";
+                statusEl.style.color = "#2ecc71"; // Your Green
                 playerCount.innerText = data.players.online;
                 maxPlayers.innerText = data.players.max;
                 playerWrapper.style.display = "block";
             } else {
                 statusEl.innerText = "Offline";
-                statusEl.style.color = "#e74c3c";
+                statusEl.style.color = "#e74c3c"; // Your Red
                 playerWrapper.style.display = "none";
             }
         })
