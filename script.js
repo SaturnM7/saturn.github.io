@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const expandContent = document.getElementById('expandContent');
     const icon = expandBtn.querySelector('.icon');
 
+    // Toggle logic
     expandBtn.addEventListener('click', () => {
         const isExpanded = expandContent.style.maxHeight && expandContent.style.maxHeight !== '0px';
 
@@ -10,17 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
             expandContent.style.maxHeight = '0px';
             icon.innerText = '+';
         } else {
+            // Load status before opening for better UX
+            loadLocalServerStatus();
             expandContent.style.maxHeight = expandContent.scrollHeight + 'px';
             icon.innerText = '-';
-            
-            // Holt die Daten direkt aus deiner lokalen JSON-Datei
-            loadLocalServerStatus();
         }
     });
 
+    // Auto-refresh if the panel is open
     setInterval(() => {
-        const isExpanded = expandContent.style.maxHeight && expandContent.style.maxHeight !== '0px';
-        if (isExpanded) {
+        if (expandContent.style.maxHeight && expandContent.style.maxHeight !== '0px') {
             loadLocalServerStatus();
         }
     }, 30000);
@@ -31,42 +31,32 @@ function loadLocalServerStatus() {
     const playerWrapper = document.getElementById('player-count-wrapper');
     const playerCount = document.getElementById('player-count');
     const maxPlayers = document.getElementById('max-players');
-    const expandContent = document.getElementById('expandContent');
 
-    // Korrigierter fetch-Befehl ohne Syntaxfehler
+    // ?t= avoids browser caching the old status
     fetch('serverstatus.json?t=' + Date.now())
         .then(response => {
-            if (!response.ok) throw new Error('Datei nicht gefunden');
+            if (!response.ok) throw new Error('Status file not ready');
             return response.json();
         })
         .then(data => {
-            if (data && data.online === true) {
+            if (data.online) {
                 statusElement.innerText = "Online";
-                statusElement.style.color = "#2ecc71"; // Minecraft-Grün
-                
+                statusElement.style.color = "#2ecc71"; // Green
                 playerCount.innerText = data.players.online;
                 maxPlayers.innerText = data.players.max;
                 playerWrapper.style.display = "block";
             } else {
                 setServerOffline(statusElement, playerWrapper);
             }
-            recalculateContainerHeight(expandContent);
         })
         .catch(error => {
-            console.error("Fehler beim Laden der Status-Datei:", error);
+            console.log("Waiting for status update...", error);
             setServerOffline(statusElement, playerWrapper);
-            recalculateContainerHeight(expandContent);
         });
 }
 
-function setServerOffline(statusElement, playerWrapper) {
-    statusElement.innerText = "Offline";
-    statusElement.style.color = "#e74c3c"; // Rot
-    playerWrapper.style.display = "none";
-}
-
-function recalculateContainerHeight(container) {
-    if (container.style.maxHeight && container.style.maxHeight !== '0px') {
-        container.style.maxHeight = container.scrollHeight + 'px';
-    }
+function setServerOffline(el, wrapper) {
+    el.innerText = "Offline";
+    el.style.color = "#e74c3c"; // Red
+    wrapper.style.display = "none";
 }
