@@ -1,177 +1,126 @@
-/* Catppuccin Mocha Palette */
+/* General Setup */
 :root {
-    --base: #1e1e2e;
-    --mantle: #181825;
-    --surface0: #313244;
-    --surface1: #45475a;
-    --text: #cdd6f4;
-    --subtext: #a6adc8;
-    --lavender: #b4befe;
-    --mauve: #cba6f7;
-    --sapphire: #74c7ec;
-    --green: #a6e3a1;
-    --red: #f38ba8;
-    --yellow: #f9e2af;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    --bg-color: #0f0f12;
+    --text-color: #e0e0e0;
+    --accent-color: #7289da; /* Discord Blue */
+    --glow-color: #00d4ff;
+    --card-bg: #1a1a1f;
 }
 
 body {
-    background-color: var(--base);
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    line-height: 1.6;
-    padding: 20px;
+    padding: 40px 20px;
+    margin: 0;
 }
 
 .container {
+    max-width: 600px;
     width: 100%;
-    max-width: 550px;
     text-align: center;
 }
 
-header {
-    margin-bottom: 2.5rem;
-}
-
-.glow {
-    color: var(--lavender);
-    font-size: 3.5rem;
-    text-shadow: 0 0 15px rgba(203, 166, 247, 0.4);
-    margin-bottom: 0.5rem;
+/* Header & Glow Effect */
+h1.glow {
+    font-size: 3rem;
+    margin-bottom: 0;
+    color: #fff;
+    text-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color);
 }
 
 .subtitle {
-    color: var(--subtext);
-    font-size: 1rem;
-    letter-spacing: 1px;
+    color: #888;
+    margin-top: 5px;
+    font-style: italic;
 }
 
-.about {
-    margin-bottom: 2rem;
-    color: var(--text);
-}
-
-/* Expandable Tab */
+/* Expandable Containers */
 .expandable-container {
-    background-color: var(--surface0);
-    border-radius: 12px;
+    background: var(--card-bg);
+    border-radius: 8px;
+    margin-bottom: 15px; /* Adds space between the Minecraft and More sections */
     overflow: hidden;
-    margin-bottom: 2rem;
-    border: 1px solid var(--surface1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 1px solid #333;
+    text-align: left;
 }
 
 .expand-btn {
     width: 100%;
-    padding: 1.2rem;
+    padding: 15px 20px;
     background: none;
     border: none;
-    color: var(--lavender);
-    font-family: inherit;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
+    color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
     transition: background 0.3s;
 }
 
 .expand-btn:hover {
-    background-color: var(--surface1);
+    background: #25252b;
 }
 
 .expand-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out;
-    background-color: var(--mantle);
+    display: none; /* Hidden by default, JS will toggle this */
+    padding: 0 20px 20px 20px;
+    border-top: 1px solid #333;
+    font-size: 0.95rem;
+    line-height: 1.6;
 }
 
-.content-inner {
-    padding: 1.5rem;
-    text-align: left;
-    border-top: 1px solid var(--surface1);
-}
-
+/* Minecraft Specific Styles */
 .ip-box {
-    background-color: var(--base);
-    padding: 0.8rem;
-    border-radius: 8px;
-    margin: 1.2rem 0;
+    background: #000;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 15px 0;
     text-align: center;
-    border: 0.5px solid var(--lavender);
+    border: 1px dashed var(--accent-color);
 }
 
 .ip-box code {
-    color: var(--green);
+    color: var(--glow-color);
+    font-family: monospace;
     font-size: 1.1rem;
 }
 
-/* Status Styling */
-.status-container {
-    background: var(--surface0);
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
+.small {
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 10px;
 }
 
-.status-line {
-    font-size: 0.9rem;
-    margin-bottom: 4px;
-}
-
-.status-checking { color: var(--yellow); }
-.status-online { color: var(--green); font-weight: bold; }
-.status-offline { color: var(--red); font-weight: bold; }
-
-.player-count {
-    font-size: 0.85rem;
-    color: var(--subtext);
-}
-
-/* Links */
+/* Links Section */
 .links {
-    display: flex;
-    gap: 0.8rem;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 30px;
 }
 
 .link-card {
-    text-decoration: none;
-    color: var(--base);
-    background-color: var(--lavender);
-    padding: 0.6rem 1.2rem;
+    background: var(--card-bg);
+    padding: 15px;
     border-radius: 8px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
+    text-decoration: none;
+    color: white;
+    border: 1px solid #333;
+    transition: transform 0.2s, border-color 0.2s;
 }
 
 .link-card:hover {
     transform: translateY(-3px);
-    background-color: var(--lavender);
-    box-shadow: 0 5px 15px rgba(203, 166, 247, 0.3);
+    border-color: var(--glow-color);
 }
 
 footer {
-    margin-top: 3rem;
-    font-size: 0.8rem;
-    color: var(--surface1);
-}
-
-.small {
-    font-size: 0.75rem;
-    color: var(--surface1);
-    margin-top: 10px;
+    margin-top: 50px;
+    color: #555;
+    font-size: 0.9rem;
 }
