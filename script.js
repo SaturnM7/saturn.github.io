@@ -1,62 +1,72 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.expand-btn');
+    const expandBtn = document.getElementById('expandBtn');
+    const expandContent = document.getElementById('expandContent');
+    const icon = expandBtn.querySelector('.icon');
 
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const content = btn.nextElementSibling;
-            const icon = btn.querySelector('.icon');
+    expandBtn.addEventListener('click', () => {
+        const isExpanded = expandContent.style.maxHeight && expandContent.style.maxHeight !== '0px';
+
+        if (isExpanded) {
+            expandContent.style.maxHeight = '0px';
+            icon.innerText = '+';
+        } else {
+            expandContent.style.maxHeight = expandContent.scrollHeight + 'px';
+            icon.innerText = '-';
             
-            // Check if open
-            const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
-
-            if (isOpen) {
-                content.style.maxHeight = '0px';
-                icon.innerText = '+';
-            } else {
-                // If it's the MC button, load status
-                if (btn.innerText.includes("Minecraft")) {
-                    loadLocalServerStatus();
-                }
-                content.style.maxHeight = '500px'; 
-                icon.innerText = '-';
-            }
-        });
+            // Holt die Daten direkt aus deiner lokalen JSON-Datei
+            loadLocalServerStatus();
+        }
     });
 
-    // Auto-refresh every 30s if open
     setInterval(() => {
-        const mcContent = document.querySelector('.expand-content');
-        if (mcContent.style.maxHeight && mcContent.style.maxHeight !== '0px') {
+        const isExpanded = expandContent.style.maxHeight && expandContent.style.maxHeight !== '0px';
+        if (isExpanded) {
             loadLocalServerStatus();
         }
     }, 30000);
 });
 
 function loadLocalServerStatus() {
-    const statusEl = document.getElementById('server-status');
+    const statusElement = document.getElementById('server-status');
     const playerWrapper = document.getElementById('player-count-wrapper');
     const playerCount = document.getElementById('player-count');
     const maxPlayers = document.getElementById('max-players');
+    const expandContent = document.getElementById('expandContent');
 
-    if (!statusEl) return;
-
+    // Korrigierter fetch-Befehl ohne Syntaxfehler
     fetch('serverstatus.json?t=' + Date.now())
-        .then(r => r.json())
+        .then(response => {
+            if (!response.ok) throw new Error('Datei nicht gefunden');
+            return response.json();
+        })
         .then(data => {
-            if (data.online) {
-                statusEl.innerText = "Online";
-                statusEl.style.color = "#a6e3a1"; // Catppuccin Green
+            if (data && data.online === true) {
+                statusElement.innerText = "Online";
+                statusElement.style.color = "#2ecc71"; // Minecraft-Grün
+                
                 playerCount.innerText = data.players.online;
                 maxPlayers.innerText = data.players.max;
                 playerWrapper.style.display = "block";
             } else {
-                statusEl.innerText = "Offline";
-                statusEl.style.color = "#f38ba8"; // Catppuccin Red
-                playerWrapper.style.display = "none";
+                setServerOffline(statusElement, playerWrapper);
             }
+            recalculateContainerHeight(expandContent);
         })
-        .catch(() => {
-            statusEl.innerText = "Offline";
-            statusEl.style.color = "#f38ba8";
+        .catch(error => {
+            console.error("Fehler beim Laden der Status-Datei:", error);
+            setServerOffline(statusElement, playerWrapper);
+            recalculateContainerHeight(expandContent);
         });
+}
+
+function setServerOffline(statusElement, playerWrapper) {
+    statusElement.innerText = "Offline";
+    statusElement.style.color = "#e74c3c"; // Rot
+    playerWrapper.style.display = "none";
+}
+
+function recalculateContainerHeight(container) {
+    if (container.style.maxHeight && container.style.maxHeight !== '0px') {
+        container.style.maxHeight = container.scrollHeight + 'px';
+    }
 }
