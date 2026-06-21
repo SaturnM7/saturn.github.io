@@ -1,20 +1,20 @@
 import json
-import os
-import socket
 from mcstatus import JavaServer
 
-# Corrected IP address
-TARGET_DOMAIN = "play.schnitzelsmp.eu"
+# We define the host and port explicitly
+TARGET_HOST = "play.schnitzelsmp.eu"
 TARGET_PORT = 25565
 OUTPUT_FILE = "serverstatus.json"
 
 def update_status():
-    socket.setdefaulttimeout(7.0) # Slightly longer timeout for stability
-    
     try:
-        # Check address and lookup server
-        server = JavaServer.lookup(TARGET_DOMAIN)
-        status = server.status()
+        # We create the server object directly. 
+        # For IPv6, mcstatus handles the address resolution.
+        server = JavaServer(TARGET_HOST, TARGET_PORT)
+        
+        # We use a longer timeout (10s) because home IPv6 routes 
+        # from GitHub/Azure can sometimes be slower.
+        status = server.status(timeout=10)
         
         data = {
             "online": True,
@@ -23,8 +23,11 @@ def update_status():
                 "max": status.players.max
             }
         }
-        print(f"Status: Online ({status.players.online}/{status.players.max})")
+        print(f"Success! Online: {status.players.online}/{status.players.max}")
+        
     except Exception as e:
+        # This will print the exact error in your GitHub Actions log
+        print(f"Error connecting to {TARGET_HOST}: {e}")
         data = {
             "online": False,
             "players": {
@@ -32,7 +35,6 @@ def update_status():
                 "max": 0
             }
         }
-        print(f"Status: Offline. Error: {e}")
         
     with open(OUTPUT_FILE, "w") as f:
         json.dump(data, f, indent=4)
