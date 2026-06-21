@@ -11,6 +11,8 @@ jobs:
     steps:
     - name: Code auschecken
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Holt die gesamte Git-Historie, um Pull-Konflikte zu vermeiden
 
     - name: Python einrichten
       uses: actions/setup-python@v5
@@ -29,6 +31,16 @@ jobs:
       run: |
         git config --global user.name "GitHub Action Bot"
         git config --global user.email "actions@github.com"
+        
+        # Erst den neuesten Stand vom Server holen und lokale Änderungen oben draufsetzen
+        git pull origin main --rebase
+        
         git add serverstatus.json
-        # Prüfen, ob sich der Status geändert hat. Wenn ja, pullen wir vor dem Push mit rebase, um Konflikte zu vermeiden!
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Update serverstatus.json [skip ci]" && git pull --rebase origin main && git push)
+        
+        # Nur committen und pushen, wenn sich die serverstatus.json wirklich geändert hat
+        if ! git diff --cached --quiet; then
+          git commit -m "Update serverstatus.json [skip ci]"
+          git push origin main
+        else
+          echo "Keine Änderungen am Serverstatus festgestellt."
+        fi
