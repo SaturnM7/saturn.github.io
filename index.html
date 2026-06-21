@@ -5,29 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saturn | Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://googleapis.com" rel="stylesheet">
 </head>
 <body>
 
     <div class="container">
         <header>
             <h1 class="glow">Saturn</h1>
-            <p class="subtitle">Front-End Developer & Server Owner</p>
+            <p class="subtitle">Creative Developer & Server Owner</p>
         </header>
 
         <main>
             <section class="about">
-                <p>Keep it simple, stupid.</p>
+                <p>Hello! I'm Saturn. I build digital experiences and manage community spaces.</p>
             </section>
 
-            <!-- Minecraft Container -->
             <div class="expandable-container">
-                <button class="expand-btn">
+                <button class="expand-btn" id="expandBtn">
                     <span>Minecraft Server</span>
                     <span class="icon">+</span>
                 </button>
-                <div class="expand-content">
+                <div class="expand-content" id="expandContent">
                     <div class="content-inner">
-                        <p>Join <strong>SchnitzelSMP</strong>, a community survival server. We aim to provide an enjoyable experience :)</p>
+                        <p>Join <strong>SchnitzelSMP</strong>, my self-hosted community survival server.</p>
                         
                         <div class="ip-box">
                             <code>play.schnitzelsmp.eu</code>
@@ -35,7 +35,7 @@
 
                         <div class="status-container">
                             <div class="status-line">
-                                Status: <span id="server-status">Checking...</span>
+                                Status: <span id="server-status" style="color: #f1c40f;">Checking...</span>
                             </div>
                             <div id="player-count-wrapper" class="player-count" style="display: none; margin-top: 5px;">
                                 Players: <span id="player-count">0</span> / <span id="max-players">0</span>
@@ -47,31 +47,14 @@
                 </div>
             </div>
 
-            <!-- More Container -->
-            <div class="expandable-container">
-                <button class="expand-btn">
-                    <span>More</span>
-                    <span class="icon">+</span>
-                </button>
-                <div class="expand-content">
-                    <div class="content-inner">
-                        <p><strong class="accent-text">Calisthenics</strong></p>
-                        <p>I have been active in Street Workout since April 2023. I managed to learn a Handstand in the span of two weeks. Fast forward a year later, I am able to Full Planche.</p>
-                        <p><strong class="accent-text">IT</strong></p>
-                        <p>Specializing in clean front-end design and managing Linux-based infrastructure.</p>
-                    </div>
-                </div>
-            </div>
-
             <section class="links">
-                <a href="https://github.com/SaturnM7" class="link-card">GitHub</a>
-                <a href="https://discord.gg/bUGcJAd5" class="link-card">Discord</a>
-                <a href="https://fluxer.gg/w1kFNGFE" class="link-card">Fluxer</a>
+                <a href="#" class="link-card">GitHub</a>
+                <a href="#" class="link-card">Discord</a>
             </section>
         </main>
 
         <footer>
-            <p>IGN: SaturnMZ</p>
+            <p>&copy; 2026 Saturn</p>
         </footer>
     </div>
 
