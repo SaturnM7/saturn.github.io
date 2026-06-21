@@ -3,22 +3,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const expandContent = document.getElementById('expandContent');
     const icon = expandBtn.querySelector('.icon');
 
-    // Toggle logic
     expandBtn.addEventListener('click', () => {
-        const isExpanded = expandContent.style.maxHeight && expandContent.style.maxHeight !== '0px';
+        const isOpen = expandContent.style.maxHeight && expandContent.style.maxHeight !== '0px';
 
-        if (isExpanded) {
+        if (isOpen) {
             expandContent.style.maxHeight = '0px';
             icon.innerText = '+';
         } else {
-            // Load status before opening for better UX
             loadLocalServerStatus();
-            expandContent.style.maxHeight = expandContent.scrollHeight + 'px';
+            // Setting to a high number or scrollHeight allows it to grow
+            expandContent.style.maxHeight = '500px'; 
             icon.innerText = '-';
         }
     });
 
-    // Auto-refresh if the panel is open
     setInterval(() => {
         if (expandContent.style.maxHeight && expandContent.style.maxHeight !== '0px') {
             loadLocalServerStatus();
@@ -27,36 +25,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadLocalServerStatus() {
-    const statusElement = document.getElementById('server-status');
+    const statusEl = document.getElementById('server-status');
     const playerWrapper = document.getElementById('player-count-wrapper');
     const playerCount = document.getElementById('player-count');
     const maxPlayers = document.getElementById('max-players');
 
-    // ?t= avoids browser caching the old status
     fetch('serverstatus.json?t=' + Date.now())
-        .then(response => {
-            if (!response.ok) throw new Error('Status file not ready');
-            return response.json();
-        })
+        .then(r => r.json())
         .then(data => {
             if (data.online) {
-                statusElement.innerText = "Online";
-                statusElement.style.color = "#2ecc71"; // Green
+                statusEl.innerText = "Online";
+                statusEl.style.color = "#2ecc71";
                 playerCount.innerText = data.players.online;
                 maxPlayers.innerText = data.players.max;
                 playerWrapper.style.display = "block";
             } else {
-                setServerOffline(statusElement, playerWrapper);
+                statusEl.innerText = "Offline";
+                statusEl.style.color = "#e74c3c";
+                playerWrapper.style.display = "none";
             }
         })
-        .catch(error => {
-            console.log("Waiting for status update...", error);
-            setServerOffline(statusElement, playerWrapper);
+        .catch(() => {
+            statusEl.innerText = "Offline";
+            statusEl.style.color = "#e74c3c";
         });
-}
-
-function setServerOffline(el, wrapper) {
-    el.innerText = "Offline";
-    el.style.color = "#e74c3c"; // Red
-    wrapper.style.display = "none";
 }
