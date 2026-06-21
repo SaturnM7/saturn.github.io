@@ -6,7 +6,7 @@ from mcstatus import JavaServer
 
 # Wir nutzen das v4-zu-v6-Gateway direkt als feste IP, um GitHubs DNS-Hänger komplett zu umgehen
 # play.schnitzelsmp.eu über das v4-only.v6.rocks Gateway
-TARGET_IP = "109.230.228.163" 
+TARGET_IP = "play.schnitzelsmp.eu" 
 TARGET_PORT = 25565
 OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "serverstatus.json")
 
