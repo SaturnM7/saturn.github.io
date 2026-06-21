@@ -43,7 +43,7 @@ header {
 }
 
 .glow {
-    color: var(--mauve);
+    color: var(--lavender);
     font-size: 3.5rem;
     text-shadow: 0 0 15px rgba(203, 166, 247, 0.4);
     margin-bottom: 0.5rem;
@@ -109,11 +109,11 @@ header {
     border-radius: 8px;
     margin: 1.2rem 0;
     text-align: center;
-    border: 1px solid var(--sapphire);
+    border: 0.5px solid var(--lavender);
 }
 
 .ip-box code {
-    color: var(--blue);
+    color: var(--green);
     font-size: 1.1rem;
 }
 
@@ -160,7 +160,7 @@ header {
 
 .link-card:hover {
     transform: translateY(-3px);
-    background-color: var(--mauve);
+    background-color: var(--lavender);
     box-shadow: 0 5px 15px rgba(203, 166, 247, 0.3);
 }
 
