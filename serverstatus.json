@@ -1,0 +1,9 @@
+{
+    "online": false,
+    "players": {
+        "online": 0,
+        "max": 0
+    },
+    "last_updated": "2026-06-21 14:45:01",
+    "error": "JavaServer.status() got an unexpected keyword argument 'timeout'"
+}
