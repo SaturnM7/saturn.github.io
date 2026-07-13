@@ -4,6 +4,6 @@
         "online": 0,
         "max": 0
     },
-    "last_updated": "2026-07-13 20:22:52",
-    "error": "[Errno 101] Network is unreachable"
+    "last_updated": "2026-07-13 21:17:46",
+    "error": "[Errno -2] Name or service not known"
 }
