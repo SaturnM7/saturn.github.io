@@ -1,17 +1,18 @@
-/* Catppuccin Mocha Palette */
+/* Gruvbox Dark Palette */
 :root {
-    --base: #1e1e2e;
-    --mantle: #181825;
-    --surface0: #313244;
-    --surface1: #45475a;
-    --text: #cdd6f4;
-    --subtext: #a6adc8;
-    --lavender: #b4befe;
-    --mauve: #cba6f7;
-    --sapphire: #74c7ec;
-    --green: #a6e3a1;
-    --red: #f38ba8;
-    --yellow: #f9e2af;
+    --base: #282828;
+    --mantle: #1d2021;
+    --surface0: #3c3836;
+    --surface1: #504945;
+    --text: #ebdbb2;
+    --subtext: #a89984;
+    --lavender: #83a598; /* Gruvbox Blue (Bright) */
+    --mauve: #d3869b;    /* Gruvbox Purple (Bright) */
+    --sapphire: #8ec07c; /* Gruvbox Aqua (Bright) */
+    --green: #b8bb26;    /* Gruvbox Green (Bright) */
+    --red: #fb4934;      /* Gruvbox Red (Bright) */
+    --yellow: #fabd2f;   /* Gruvbox Yellow (Bright) */
+    --orange: #fe8019;   /* Gruvbox Orange (Bright) */
 }
 
 * {
@@ -43,9 +44,9 @@ header {
 }
 
 .glow {
-    color: var(--lavender);
+    color: var(--orange); /* Auf Orange gewechselt für den typischen Gruvbox-Retro-Glow */
     font-size: 3.5rem;
-    text-shadow: 0 0 15px rgba(203, 166, 247, 0.4);
+    text-shadow: 0 0 10px rgba(254, 128, 25, 0.3);
     margin-bottom: 0.5rem;
 }
 
@@ -60,14 +61,14 @@ header {
     color: var(--text);
 }
 
-/* Expandable Tab */
+/* Expandable Tab (Harte Kanten & schärferer Schatten) */
 .expandable-container {
     background-color: var(--surface0);
-    border-radius: 12px;
+    border-radius: 0px; /* Harte Ecken */
     overflow: hidden;
     margin-bottom: 1rem;
-    border: 1px solid var(--surface1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 2px solid var(--surface1); /* Dickere Ränder für Retro-Look */
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3); /* Harter Block-Schatten */
 }
 
 .expand-btn {
@@ -83,43 +84,43 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: background 0.3s;
+    transition: background 0.2s;
 }
 
 .expand-btn:hover {
     background-color: var(--surface1);
+    color: var(--yellow);
 }
 
 .expand-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.6s ease-out;
+    transition: max-height 0.4s cubic-bezier(0, 1, 0, 1); /* Schnelleres, knackigeres Ausklappen */
     background-color: var(--mantle);
 }
 
 .content-inner {
     padding: 1.5rem;
     text-align: left;
-    border-top: 1px solid var(--surface1);
+    border-top: 2px solid var(--surface1);
 }
 
+/* IP-Box (Harte Kanten) */
 .ip-box {
     background-color: var(--base);
     padding: 0.8rem;
-    border-radius: 8px;
+    border-radius: 0px; /* Harte Ecken */
     margin: 1.2rem 0;
     text-align: center;
-    border: 0.5px solid var(--lavender);
+    border: 2px solid var(--lavender);
 }
-
 
 .ip-box code {
     color: var(--green);
     font-size: 1.1rem;
 }
 
-
-/* Links */
+/* Links (Harte Kanten & Stept-Up Hover) */
 .links {
     display: flex;
     gap: 0.8rem;
@@ -132,16 +133,17 @@ header {
     color: var(--base);
     background-color: var(--lavender);
     padding: 0.6rem 1.2rem;
-    border-radius: 8px;
+    border-radius: 0px; /* Harte Ecken */
     font-weight: bold;
     font-size: 0.9rem;
-    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    transition: all 0.15s ease-in-out;
 }
 
 .link-card:hover {
-    transform: translateY(-3px);
-    background-color: var(--lavender);
-    box-shadow: 0 5px 15px rgba(203, 166, 247, 0.3);
+    transform: translate(-2px, -2px); /* Diagonalen Versatz für Retro-Button-Effekt */
+    background-color: var(--yellow);
+    box-shadow: 4px 4px 0px var(--orange); /* Fester, farbiger Schatten beim Hover */
 }
 
 footer {
