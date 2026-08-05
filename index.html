@@ -6,7 +6,6 @@
     <title>Saturn | Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script>
-        // Leitet nur weiter, wenn der User nicht explizit die englische Version gewählt hat (?lang=en)
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('lang') !== 'en' && navigator.language && navigator.language.startsWith('de')) {
             window.location.href = "index_de.html";
@@ -19,7 +18,10 @@
         <header>
             <div class="top-bar">
                 <h1 class="glow">Saturn</h1>
-                <button id="theme-btn" class="theme-toggle" onclick="toggleTheme()">Light</button>
+                <div class="header-controls">
+                    <button id="theme-btn" class="theme-toggle">☀️ Light Mode</button>
+                    <a href="index_de.html" class="lang-btn">DE</a>
+                </div>
             </div>
             <p class="subtitle">Front-End Developer, Calisthenics Athlete & Server Owner</p>
         </header>
@@ -78,10 +80,6 @@
 
         <footer>
             <p>IGN: SaturnMZ</p>
-            <!-- Sprachwechsler im Footer -->
-            <div class="lang-switcher" style="margin-top: 10px; font-family: inherit; font-size: 0.85rem;">
-                <span style="color: var(--accent-orange); font-weight: bold;">EN</span> | <a href="index_de.html" style="color: var(--gray-sub); text-decoration: none;">DE</a>
-            </div>
         </footer>
     </div>
 
