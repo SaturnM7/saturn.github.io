@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saturn | Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://googleapis.com" rel="stylesheet">
 </head>
 <body>
 
     <div class="container">
         <header>
-            <h1 class="glow">Saturn</h1>
+            <div class="top-bar">
+                <h1 class="glow">Saturn</h1>
+                <button id="theme-btn" class="theme-toggle" onclick="toggleTheme()">☀️ Light Mode</button>
+            </div>
             <p class="subtitle">Front-End Developer, Calisthenics Athlete & Server Owner</p>
         </header>
 
@@ -22,11 +24,11 @@
 
             <!-- First Button -->
             <div class="expandable-container">
-                <button class="expand-btn" id="expandBtn">
+                <button class="expand-btn" onclick="toggleExpand(this)">
                     <span>Minecraft Server</span>
                     <span class="icon">+</span>
                 </button>
-                <div class="expand-content" id="expandContent">
+                <div class="expand-content">
                     <div class="content-inner">
                         <p>Join <strong>SchnitzelSMP</strong>, a community survival Factions server for Java & Bedrock.</p>
                         
@@ -43,13 +45,13 @@
                 </div>
             </div>
 
-            <!-- Second Button (Added) -->
+            <!-- Second Button -->
             <div class="expandable-container">
-                <button class="expand-btn" id="expandBtn2">
+                <button class="expand-btn" onclick="toggleExpand(this)">
                     <span>Calisthenics</span>
                     <span class="icon">+</span>
                 </button>
-                <div class="expand-content" id="expandContent2">
+                <div class="expand-content">
                     <div class="content-inner">
                         <p><strong>Backstory</strong></p>
                         <p style="margin-bottom: 30px;">My journey in the sport commonly referred to as Calisthenics or Street Workout originally started all the way back in April 2025. Up until that point I had already been doing simple things like pushups but never took it too seriously. However things began to change when I went on a holiday trip to Portugal in late April where I discovered a video of someone doing a handstand on Social Media. This led me to achieve a handstand within the next 2 weeks by practicing daily. After that I started striving for more and have since unlocked many more skills.</p>
