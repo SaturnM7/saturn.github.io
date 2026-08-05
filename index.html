@@ -1,4 +1,3 @@
-</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saturn | Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        // Erkennt 'de', 'de-DE', 'de-CH', 'de-AT' und leitet sofort weiter
+        if (navigator.language && navigator.language.startsWith('de')) {
+            window.location.href = "index_de.html";
+        }
+    </script>
 </head>
 <body>
 
