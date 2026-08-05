@@ -201,4 +201,9 @@ footer {
     font-size: 0.75rem;
     color: var(--gray-sub);
     margin-top: 10px;
+
+.lang-switcher a:hover {
+    color: var(--accent-yellow) !important;
+}
+
 }
