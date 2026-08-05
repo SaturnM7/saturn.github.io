@@ -13,16 +13,31 @@ function toggleExpand(button) {
     }
 }
 
-// Integrierter Dark / Light Mode Umschalter
-function toggleTheme() {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
+// Event-Listener nach dem Laden der Seite binden
+document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('theme-btn');
     
-    if (currentTheme === 'light') {
-        document.documentElement.removeAttribute('data-theme');
-        themeBtn.innerText = "☀️ Light Mode";
-    } else {
+    // Prüfen, ob der User bereits eine Präferenz gespeichert hat
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
         document.documentElement.setAttribute('data-theme', 'light');
-        themeBtn.innerText = "🌑 Dark Mode";
+        if (themeBtn) themeBtn.innerText = "🌑 Dark Mode";
     }
-}
+
+    // Klick-Event hinzufügen
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            
+            if (currentTheme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+                themeBtn.innerText = "☀️ Light Mode";
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeBtn.innerText = "🌑 Dark Mode";
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+});
