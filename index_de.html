@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saturn | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="top-bar">
+                <h1 class="glow">Saturn</h1>
+                <button id="theme-btn" class="theme-toggle" onclick="toggleTheme()">Light</button>
+            </div>
+            <p class="subtitle">Front-End Entwickler, Calisthenics Athlet & Server-Besitzer</p>
+        </header>
+
+        <main>
+            <section class="about">
+                <p>Keep it simple, stupid.</p>
+            </section>
+
+            <!-- Erster Button (Minecraft) -->
+            <div class="expandable-container">
+                <button class="expand-btn" onclick="toggleExpand(this)">
+                    <span>Minecraft Server</span>
+                    <span class="icon">+</span>
+                </button>
+                <div class="expand-content">
+                    <div class="content-inner">
+                        <p>Tritt <strong>SchnitzelSMP</strong> bei, einem Community-Survival-Factions-Server für Java & Bedrock.</p>
+                        
+                        <div class="ip-box">
+                            <code>play.schnitzelsmp.eu</code>
+                        </div>
+                        
+                        <p style="margin-bottom: 10px;"><strong>Version:</strong> 26.1.2+</p>
+                        <p style="margin-bottom: 10px;"><strong>Über den Server</strong></p>
+                        <p style="margin-bottom: 30px;">SchnitzelSMP läuft auf der PaperMC-Version 26.1.2, erlaubt es aber Spielern auf neueren Versionen des Spiels beizutreten – dank ViaVersion. Zusätzlich nutzen wir ein Lifesteal-Plugin gepaart mit vielen maßgeschneiderten Enchants, um ein authentisches Factions-Erlebnis zu bieten. Derzeit sind die meisten unserer Plugins öffentlich konfiguriert. Das wird sich jedoch ändern, sobald wir unser Budget erweitern können und sich meine Kenntnisse in Java verbessern.</p>
+                        <p><strong>Tritt meinem Discord bei oder kontaktiere mich unter support@schnitzelsmp.eu für weitere Informationen.</strong></p>
+                        <p class="small">Hinweis: Falls du Verbindungsprobleme hast, stelle sicher, dass dein Client IPv6 unterstützt, oder nutze unsere Proxy-Adresse.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zweiter Button (Calisthenics) -->
+            <div class="expandable-container">
+                <button class="expand-btn" onclick="toggleExpand(this)">
+                    <span>Calisthenics</span>
+                    <span class="icon">+</span>
+                </button>
+                <div class="expand-content">
+                    <div class="content-inner">
+                        <p><strong>Hintergrundgeschichte</strong></p>
+                        <p style="margin-bottom: 30px;">Meine Reise in dem Sport, der gemeinhin als Calisthenics oder Street Workout bezeichnet wird, begann ursprünglich im April 2025. Bis zu diesem Zeitpunkt hatte ich zwar schon einfache Dinge wie Liegestütze gemacht, es aber nie besonders ernst genommen. Die Dinge begannen sich jedoch zu ändern, als ich Ende April eine Urlaubsreise nach Portugal machte und in den sozialen Medien ein Video von jemandem sah, der einen Handstand machte. Das spornte mich an, sodass ich durch tägliches Üben innerhalb der nächsten zwei Wochen den Handstand meisterte. Danach strebte ich nach mehr und habe seitdem viele weitere Skills freigeschaltet.</p>
+                        <p><strong>Skills</strong></p>
+                        <p style="margin-bottom: 30px;">Handstand, Handstand-Liegestütz (Normal, 90 Grad, Klatschen, Archer, Tiger Bent), Half Lay Planche, Deadpress zum Handstand, Full Planche, Full Planche Press, Full Planche Pushup, Einarmiger Klimmzug</p>
+                        <p class="small">Wenn du weitere Fragen zu meinem Fortschritt hast, kontaktiere mich bitte auf Discord oder über support@saturndev.de</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="links">
+                <a href="https://github.com/SaturnM7" class="link-card" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://discord.gg/q478eJ73" class="link-card" target="_blank" rel="noopener noreferrer">Discord</a>
+                <a href="https://donate.schnitzelsmp.eu" class="link-card" target="_blank" rel="noopener noreferrer">Spenden</a>
+            </section>
+        </main>
+
+        <footer>
+            <p>IGN: SaturnMZ</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
