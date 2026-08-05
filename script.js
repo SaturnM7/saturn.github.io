@@ -1,4 +1,4 @@
-// Universelle Akkordeon-Steuerung für alle Kacheln
+// 1. Universelle Steuerung für alle ausklappbaren Akkordeons
 function toggleExpand(button) {
     const container = button.parentElement;
     const content = container.querySelector('.expand-content');
@@ -13,18 +13,18 @@ function toggleExpand(button) {
     }
 }
 
-// Event-Listener nach dem Laden der Seite binden
+// 2. Fehlerfreie Bindung des Theme-Umschalters beim Laden
 document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('theme-btn');
-    
-    // Prüfen, ob der User bereits eine Präferenz gespeichert hat
     const savedTheme = localStorage.getItem('theme');
+    
+    // Vorabgespeicherten Status direkt laden
     if (savedTheme === 'light') {
         document.documentElement.setAttribute('data-theme', 'light');
         if (themeBtn) themeBtn.innerText = "Dark";
     }
 
-    // Klick-Event hinzufügen
+    // Klick-Logik für den Modus-Wechsel
     if (themeBtn) {
         themeBtn.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
