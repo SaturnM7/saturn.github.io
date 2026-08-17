@@ -1,0 +1,9 @@
+{
+    "online": false,
+    "players": {
+        "online": 0,
+        "max": 0
+    },
+    "last_updated": "2026-08-17 14:42:47",
+    "error": "[Errno -2] Name or service not known"
+}
